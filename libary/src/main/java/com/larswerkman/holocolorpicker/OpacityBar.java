@@ -25,6 +25,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -99,6 +100,8 @@ public class OpacityBar extends View {
 	 * The rectangle enclosing the bar.
 	 */
 	private RectF mBarRect = new RectF();
+
+    private Drawable mBarGridDrawable = new OpacityGridBackgroundDrawable();
 
 	/**
 	 * {@code Shader} instance used to fill the shader of the paint.
@@ -273,6 +276,10 @@ public class OpacityBar extends View {
 					(mBarPointerHaloRadius - (mBarThickness / 2)),
 					(mBarLength + (mBarPointerHaloRadius)),
 					(mBarPointerHaloRadius + (mBarThickness / 2)));
+            mBarGridDrawable.setBounds(mBarPointerHaloRadius,
+                    (mBarPointerHaloRadius - (mBarThickness / 2)),
+                    (mBarLength + (mBarPointerHaloRadius)),
+                    (mBarPointerHaloRadius + (mBarThickness / 2)));
 		}
 		else {
 			x1 = mBarThickness;
@@ -282,6 +289,10 @@ public class OpacityBar extends View {
 					mBarPointerHaloRadius,
 					(mBarPointerHaloRadius + (mBarThickness / 2)),
 					(mBarLength + (mBarPointerHaloRadius)));
+            mBarGridDrawable.setBounds((mBarPointerHaloRadius - (mBarThickness / 2)),
+                    mBarPointerHaloRadius,
+                    (mBarPointerHaloRadius + (mBarThickness / 2)),
+                    (mBarLength + (mBarPointerHaloRadius)));
 		}
 
 		// Update variables that depend of mBarLength.
@@ -315,6 +326,7 @@ public class OpacityBar extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+        mBarGridDrawable.draw(canvas);
 		// Draw the bar.
 		canvas.drawRect(mBarRect, mBarPaint);
 
