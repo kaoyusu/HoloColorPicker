@@ -116,6 +116,11 @@ public class ColorPicker extends View {
 	private RectF mCenterRectangle = new RectF();
 
 	/**
+	 * Grid Background inside color wheel.
+	 */
+	private OpacityGridBackgroundDrawable mGridBackgroundDrawable = new OpacityGridBackgroundDrawable();
+
+	/**
 	 * {@code true} if the user clicked on the pointer to start the move mode. <br>
 	 * {@code false} once the user stops touching the screen.
 	 * 
@@ -403,7 +408,10 @@ public class ColorPicker extends View {
 
 		// Draw the halo of the center colors.
 		canvas.drawCircle(0, 0, mColorCenterHaloRadius, mCenterHaloPaint);
-		
+
+		// Draw grid background behind transparent color
+		mGridBackgroundDrawable.draw(canvas);
+
 		if (mShowCenterOldColor) {
 			// Draw the old selected color in the center.
 			canvas.drawArc(mCenterRectangle, 90, 180, true, mCenterOldPaint);
@@ -458,6 +466,7 @@ public class ColorPicker extends View {
 		mColorCenterHaloRadius = (int) ((float) mPreferredColorCenterHaloRadius * ((float) mColorWheelRadius / (float) mPreferredColorWheelRadius));
 		mCenterRectangle.set(-mColorCenterRadius, -mColorCenterRadius,
 				mColorCenterRadius, mColorCenterRadius);
+		mGridBackgroundDrawable.setCircleClip(mCenterRectangle);
 	}
 
 	private int ave(int s, int d, float p) {
